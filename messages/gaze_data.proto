@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+option csharp_namespace = "RemoteConnector.Proto";
+option java_multiple_files = true;
+option java_package = "com.inseye.remoteconnector.proto";
+
+package remoteconnector;
+
+import "google/protobuf/timestamp.proto";
+
+message GazeData {
+  enum GazeEvent {
+
+    /*
+    Unknown value.
+    Only appears if one of communication sides has more enum values defined than other, and value out of range is set.
+     */
+    UNKNOWN = 0;
+    /*
+    No gaze related events occurred.
+     */
+    NONE = 1;
+    /*
+    Left eye is closed or blinked.
+     */
+    LEFT_BLINK_OR_CLOSED = 2;
+
+    /*
+    Right eye is closed or blinked.
+     */
+    RIGHT_BLINK_OR_CLOSED = 3;
+
+    /*
+    Both eye are closed or both eye performed blink.
+     */
+    BOTH_BLINK_OR_CLOSED = 4;
+
+    /*
+    Saccade occurred.
+     */
+    SACCADE = 5;
+
+    /*
+    Headset was put on by the user.
+     */
+    HEADSET_MOUNTED = 6;
+
+    /*
+    Headset was put off by the user.
+     */
+    HEADSET_DISMOUNTED = 7;
+  }
+  google.protobuf.Timestamp timestamp = 1;
+  float left_x = 2;
+  float left_y = 3;
+  float right_x = 4;
+  float right_y = 5;
+  GazeEvent gaze_event = 6;
+}

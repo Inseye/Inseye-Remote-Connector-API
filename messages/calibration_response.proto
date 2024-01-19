@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option csharp_namespace = "RemoteConnector.Proto";
+option java_multiple_files = true;
+option java_package = "com.inseye.remoteconnector.proto";
+
+package remoteconnector;
+
+message CalibrationResponse {
+  enum Status {
+    /*
+    Unknown value.
+    Only appears if one of communication sides has more enum values defined than other, and value out of range is set.
+     */
+    UNKNOWN = 0;
+    /*
+    Calibration finished successfully and user is calibrated.
+     */
+    FinishedSuccessfully = 1;
+    /*
+    Calibration finished but user is not calibrated.
+    Further details are available through error message.
+     */
+    FinishedFailed = 2;
+    /*
+    Calibration failed to start because calibration software is missing standalone device.
+     */
+    MissingSoftware = 3;
+    /*
+    Calibration is ongoing.
+     */
+    Ongoing = 4;
+  }
+  Status status = 1;
+  optional string error_message = 2;
+}

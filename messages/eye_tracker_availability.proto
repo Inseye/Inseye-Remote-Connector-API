@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option csharp_namespace = "RemoteConnector.Proto";
+option java_multiple_files = true;
+option java_package = "com.inseye.remoteconnector.proto";
+
+package remoteconnector;
+
+message EyeTrackerAvailability {
+  enum Status {
+    /*
+    Unknown value.
+    Only appears if one of communication sides has more enum values defined than other, and value out of range is set.
+     */
+    UNKNOWN = 0;
+    /*
+    Eye tracker is connected and ready to serve (stream gaze data or [re]calibrate).
+     */
+    AVAILABLE = 1;
+    /*
+    Eye tracker is physically disconnected from device.
+     */
+    DISCONNECTED = 2;
+    /*
+    Eye tracker is not calibrated and requires calibration before streaming gaze data.
+     */
+    NOT_CALIBRATED = 3;
+    /*
+    Eye tracker is in the calibration process. Gaze data cannot be streamed yet.
+     */
+    CALIBRATING = 4;
+    /*
+    Eye tracker is connected but unavailable to perform gaze streaming or calibration.
+     */
+    UNAVAILABLE = 5;
+  }
+  /*
+  Current eye tracker status.
+   */
+  Status status = 1;
+}

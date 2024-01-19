@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option csharp_namespace = "RemoteConnector.Proto";
+option java_multiple_files = true;
+option java_package = "com.inseye.remoteconnector.grpc";
+
+package remoteconnector;
+
+import "messages/gaze_data_request.proto";
+import "messages/gaze_data.proto";
+import "messages/calibration_request.proto";
+import "messages/calibration_response.proto";
+import "messages/observe_eye_tracker_availability_request.proto";
+import "messages/eye_tracker_availability.proto";
+
+
+service RemoteService {
+  /*
+  Opens gaze data stream.
+   */
+  rpc OpenGazeStream(remoteconnector.GazeDataRequest) returns (stream remoteconnector.GazeData);
+  /*
+  Performs calibration using builtin calibration software installed of standalone device.
+  When the client disconnects from calibration responses stream the calibration process is aborted.
+   */
+  rpc PerformCalibration(remoteconnector.CalibrationRequest) returns (stream remoteconnector.CalibrationResponse);
+  /*
+  Opens stream that will update client with latest status of eye tracker availability.
+   */
+  rpc ObserveEyeTrackerAvailability(remoteconnector.ObserveEyeTrackerAvailabilityRequest) returns (stream remoteconnector.EyeTrackerAvailability);
+}
